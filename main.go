@@ -242,12 +242,12 @@ func parseImportFile(in []byte) (out []byte, err error) {
 		},
 	}
 
-	t, err := template.New("input file").Funcs(funcMap).Parse(string(in))
-	if err != nil {
+	t, innererr := template.New("input file").Funcs(funcMap).Parse(string(in))
+	if innererr != nil {
 		return nil, err
 	}
 
 	buf := bytes.NewBuffer([]byte{})
-	err = t.Execute(buf, nil)
-	return buf.Bytes(), err
+	innererr = t.Execute(buf, nil)
+	return buf.Bytes(), innererr
 }
